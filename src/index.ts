@@ -1,17 +1,23 @@
 import express, {Request, Response, NextFunction} from 'express';
+import statusRoute from './routes/status.route';
+import usersRoute from './routes/users.route';
 
 const app = express();
 
-app.get('/status', (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).send({ foo: 'bar'});
-});
+// Configurações para a aplicação aceitar BODY enviado utilizando JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true  }));
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).send({ name: 'Alexandre'});
-})
+// Configuração das Rotas
+app.use(usersRoute);
+app.use(statusRoute);
 
+
+// Inicialização do Servidor
 app.listen(3000, () => {
     console.log('Aplicação executando na porta 3000 ...');
 });
+
+
 
 
